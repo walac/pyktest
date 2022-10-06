@@ -31,8 +31,7 @@ class Task(ABC):
     ctx: Context
     pre_exec: Optional[PreExecType] = field(default=None, repr=False)
     post_exec: Optional[PostExecType] = field(default=None, repr=False)
-    dependencies: InitVar[Sequence[TaskInterface]] = field(
-        default_factory=tuple)
+    dependencies: InitVar[Sequence[TaskInterface]] = tuple()
 
     def __post_init__(self, dependencies: Sequence[TaskInterface]) -> None:
         self.ctx.add_dependencies(self, *dependencies)
