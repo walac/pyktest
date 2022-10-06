@@ -26,7 +26,7 @@ class Connection(ABC):
         """
 
     @abstractmethod
-    def copy_to(self, src: str, dest: str) -> None:
+    def put(self, src: str, dest: str) -> None:
         """
         Copy a local file to the host.
 
@@ -38,7 +38,7 @@ class Connection(ABC):
         """
 
     @abstractmethod
-    def copy_from(self, src: str, dest='.') -> None:
+    def get(self, src: str, dest='.') -> None:
         """
         Copy a file from the host to the local machine.
 
@@ -82,12 +82,12 @@ class NullConnection(Connection):
         super().run_command(cmd, capture_output)
         raise NotImplemented('run_command is not implemented')
 
-    def copy_to(self, src: str, dest: str) -> None:
-        super().copy_to(src, dest)
+    def put(self, src: str, dest: str) -> None:
+        super().put(src, dest)
         raise NotImplementedError('copy_to is not implemented')
 
-    def copy_from(self, src: str, dest='.') -> None:
-        super().copy_from(src, dest)
+    def get(self, src: str, dest='.') -> None:
+        super().get(src, dest)
         raise NotImplementedError('copy_from is not implemented')
 
 
