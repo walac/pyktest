@@ -6,14 +6,6 @@ from io import StringIO
 from logging import StreamHandler, INFO
 
 
-@pytest.fixture
-def log_stream():
-    log_stre = StringIO()
-    logger.addHandler(StreamHandler(log_stre))
-    logger.setLevel(INFO)
-    return log_stre
-
-
 def test_log_output(log_stream: StringIO) -> None:
     test_str = 'This is a test log'
     log_output(StringIO(test_str))
