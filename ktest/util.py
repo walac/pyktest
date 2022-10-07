@@ -35,27 +35,27 @@ def run_cmd(cmd: str, capture_output=False, **kwargs) -> str:
     """
     logger.info(cmd)
 
-    p = subprocess.Popen(
-        cmd,
-        shell=True,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE if capture_output else subprocess.STDOUT,
-        **kwargs)
+    with subprocess.Popen(
+            cmd,
+            shell=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE if capture_output else subprocess.STDOUT,
+            **kwargs) as p:
 
-    if capture_output:
-        log_output(p.stderr)
-    else:
-        log_output(p.stdout)
+        if capture_output:
+            log_output(p.stderr)
+        else:
+            log_output(p.stdout)
 
-    rc = p.wait()
-    if rc:
-        raise subprocess.CalledProcessError(rc, p.args)
+        rc = p.wait()
+        if rc:
+            raise subprocess.CalledProcessError(rc, p.args)
 
-    if capture_output and p.stdout:
-        return ''.join(p.stdout.readlines())
+        if capture_output and p.stdout:
+            return ''.join(p.stdout.readlines())
 
-    return ''
+        return ''
 
 
 def expd(s: str) -> str:
