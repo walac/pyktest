@@ -38,7 +38,7 @@ class Connection(ABC):
         """
 
     @abstractmethod
-    def get(self, src: str, dest='.') -> None:
+    def get(self, src: str, dest: str) -> None:
         """
         Copy a file from the host to the local machine.
 
