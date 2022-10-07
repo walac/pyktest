@@ -80,7 +80,7 @@ class NullConnection(Connection):
 
     def run_command(self, cmd: str, capture_output=False) -> str:
         super().run_command(cmd, capture_output)
-        raise NotImplemented('run_command is not implemented')
+        raise NotImplementedError('run_command is not implemented')
 
     def put(self, src: str, dest: str) -> None:
         super().put(src, dest)
