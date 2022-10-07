@@ -1,7 +1,8 @@
-from . import util
 import os
 import platform
 from dataclasses import dataclass, field
+
+from . import util
 
 
 @dataclass(frozen=True, slots=True)
