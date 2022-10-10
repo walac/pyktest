@@ -21,8 +21,8 @@ class Make:
         :type make: str
     """
 
-    srcdir: str
-    outdir: str
+    srcdir: str | os.PathLike
+    outdir: str | os.PathLike
     arch: str = field(default_factory=platform.machine)
     make: str = "make"
 
@@ -42,8 +42,8 @@ class Make:
         """
         j = f'-j{os.cpu_count()}' if parallel else ''
         util.run_cmd(
-            f'{self.make} ARCH={self.arch} O={self.outdir} {j} {args} {target}',
-            cwd=self.srcdir)
+            f'{self.make} ARCH={self.arch} O={os.fspath(self.outdir)} {j} {args} {target}',
+            cwd=os.fspath(self.srcdir))
 
     def kernel_release(self) -> str:
         """Compute the kernel release.
@@ -55,7 +55,7 @@ class Make:
         """
         return util.run_cmd(f'{self.make} kernelrelease',
                             capture_output=True,
-                            cwd=self.srcdir).rstrip('\n')
+                            cwd=os.fspath(self.srcdir)).rstrip('\n')
 
 
 __all__ = ['Make']

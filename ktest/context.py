@@ -64,7 +64,7 @@ class Context:
             self.__build_dir = TemporaryDirectory(dir=self.__temp_dir)
 
         assert isinstance(self.repo.working_dir, PathLike)
-        self.make = Make(srcdir=os.fspath(self.repo.working_dir),
+        self.make = Make(srcdir=self.repo.working_dir,
                          outdir=self.__build_dir.name,
                          arch=arch)
 
