@@ -103,7 +103,7 @@ class Context:
 
     def create_temp_dir(self) -> TemporaryDirectory[str]:
         """Create a new temporary directory."""
-        return TemporaryDirectory(dir=self.build_dir)
+        return TemporaryDirectory(dir=self.__temp_dir)
 
     def run(self) -> None:
         """Run all tasks in proper order."""
