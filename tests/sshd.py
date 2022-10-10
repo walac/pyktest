@@ -1,5 +1,6 @@
 from types import TracebackType
 from contextlib import AbstractContextManager
+from typing import Final
 
 from podman.domain.containers import Container
 from podman.client import PodmanClient
@@ -8,7 +9,7 @@ from podman.client import PodmanClient
 class SSHD(AbstractContextManager):
     """Run a sshd daemon inside a container."""
 
-    PORT = 2022
+    PORT: Final[int] = 2022
 
     def __init__(self) -> None:
         self.client = PodmanClient()
