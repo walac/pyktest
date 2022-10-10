@@ -1,4 +1,5 @@
 import subprocess
+import os
 from typing import Optional, IO
 from os.path import expandvars, expanduser
 
@@ -58,20 +59,21 @@ def run_cmd(cmd: str, capture_output=False, **kwargs) -> str:
         return ''
 
 
-def expd(s: str) -> str:
+def expd(p: str | bytes | os.PathLike) -> str:
     """
     Expand references to environment variables and home directory.
 
     This function expands environment variables and home directory
     references inside the string.
 
-    :param s: The string to expand.
-    :type s: string
+    :param p: The string to expand.
+    :type s: str | bytes | os.PathLike
 
     :return: The string expanded.
     :rtype: str
 
     >>> import os
+    >>> from pathlib import PurePath
     >>> os.environ['MYVAR'] = 'pyktest'
     >>> home = os.environ.get('HOME', '')
     >>> os.environ['HOME'] = '/home/pyktest'
@@ -79,9 +81,16 @@ def expd(s: str) -> str:
     'test string'
     >>> expd('~/$MYVAR')
     '/home/pyktest/pyktest'
+    >>> expd(b'~/$MYVAR')
+    '/home/pyktest/pyktest'
+    >>> expd(PurePath('~/$MYVAR'))
+    '/home/pyktest/pyktest'
     >>> os.environ['HOME'] = home
     """
-    return expandvars(expanduser(s))
+    if isinstance(p, bytes):
+        p = p.decode()
+
+    return expandvars(expanduser(os.fspath(p)))
 
 
 __all__ = ['log_output', 'run_cmd', 'expd']
