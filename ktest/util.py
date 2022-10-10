@@ -67,7 +67,7 @@ def expd(p: str | bytes | os.PathLike) -> str:
     references inside the string.
 
     :param p: The string to expand.
-    :type s: str | bytes | os.PathLike
+    :type p: str | bytes | os.PathLike
 
     :return: The string expanded.
     :rtype: str
