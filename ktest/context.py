@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from graphlib import TopologicalSorter
 
 from git.repo import Repo
+from git.types import PathLike
 
 from .connection.base import FactoryType, NullFactory, Connection
 from .util import expd
@@ -30,7 +31,7 @@ class _FakeTemp:
 class Context:
 
     def __init__(self,
-                 repo: Repo,
+                 repo: str | os.PathLike,
                  connection_factory: FactoryType = NullFactory(),
                  arch=platform.machine(),
                  temp_dir=gettempdir(),
@@ -49,7 +50,7 @@ class Context:
         self.__temp_dir = expd(temp_dir)
         os.makedirs(temp_dir, exist_ok=True)
 
-        self.repo = repo
+        self.repo = Repo(repo)
 
         self.__connection_factory = connection_factory
         self.__connection: Optional[Connection] = None
@@ -62,12 +63,12 @@ class Context:
         else:
             self.__build_dir = TemporaryDirectory(dir=self.__temp_dir)
 
-        assert isinstance(repo.working_dir, str)
-        self.make = Make(srcdir=repo.working_dir,
+        assert isinstance(self.repo.working_dir, PathLike)
+        self.make = Make(srcdir=os.fspath(self.repo.working_dir),
                          outdir=self.__build_dir.name,
                          arch=arch)
 
-        logger.info(f'Source directory: {repo.working_dir}')
+        logger.info(f'Source directory: {self.repo.working_dir}')
         logger.info(f'Build directory: {self.__build_dir}')
         logger.info(f'Temp directory: {self.__temp_dir}')
 
