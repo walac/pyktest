@@ -4,6 +4,7 @@ from typing import Optional, Protocol
 from tempfile import TemporaryDirectory, gettempdir
 from dataclasses import dataclass
 from graphlib import TopologicalSorter
+from pathlib import Path
 
 from git.repo import Repo
 from git.types import PathLike
@@ -34,7 +35,7 @@ class Context:
                  repo: str | os.PathLike,
                  connection_factory: FactoryType = NullFactory(),
                  arch=platform.machine(),
-                 temp_dir=gettempdir(),
+                 temp_dir: str | os.PathLike = gettempdir(),
                  build_dir: Optional[str] = None) -> None:
         """
         :param repo: Kernel git repository.
@@ -47,8 +48,8 @@ class Context:
         :type temp_dir: str
         :param build_dir: The path to the output binary directory (equals to `make O=`)
         """
-        self.__temp_dir = expd(temp_dir)
-        os.makedirs(temp_dir, exist_ok=True)
+        self.__temp_dir = Path(expd(temp_dir))
+        self.__temp_dir.mkdir(parents=True, exist_ok=True)
 
         self.repo = Repo(repo)
 
