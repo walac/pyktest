@@ -1,9 +1,7 @@
 import pytest
 from subprocess import CalledProcessError
 from ktest.util import run_cmd, log_output
-from ktest._log import logger
 from io import StringIO
-from logging import StreamHandler, INFO
 
 
 def test_log_output(log_stream: StringIO) -> None:

@@ -33,7 +33,8 @@ class Make:
         :type target: str
         :param args: additional arguments to the make command
         :type args: str
-        :param parallel: if True, will run os.cpu_count() instances of the make `-j$(nproc)`
+        :param parallel: if True, will run os.cpu_count() instances of the make
+                         `-j$(nproc)`
         :type parallel: bool
 
         :raise subprocess.CalledProcessorError: if the command fails
@@ -42,7 +43,8 @@ class Make:
         """
         j = f"-j{os.cpu_count()}" if parallel else ""
         util.run_cmd(
-            f"{self.make} ARCH={self.arch} O={os.fspath(self.outdir)} {j} {args} {target}",
+            f"{self.make} ARCH={self.arch} O={os.fspath(self.outdir)} {j} {args} "
+            + f"{target}",
             cwd=os.fspath(self.srcdir),
         )
 
