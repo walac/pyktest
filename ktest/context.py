@@ -85,9 +85,9 @@ class Context:
         return self.__connection
 
     @property
-    def build_dir(self) -> str:
+    def build_dir(self) -> Path:
         """Return the build directory."""
-        return self.__build_dir.name
+        return Path(self.__build_dir.name)
 
     def add_dependencies(self, task: TaskInterface,
                          *dependencies: TaskInterface) -> None:
