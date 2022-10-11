@@ -16,7 +16,7 @@ def log_output(output: Optional[IO[str]]) -> None:
     """
     if output:
         for line in output:
-            logger.info(line.rstrip('\n'))
+            logger.info(line.rstrip("\n"))
 
 
 def run_cmd(cmd: str, capture_output=False, **kwargs) -> str:
@@ -37,12 +37,13 @@ def run_cmd(cmd: str, capture_output=False, **kwargs) -> str:
     logger.info(cmd)
 
     with subprocess.Popen(
-            cmd,
-            shell=True,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE if capture_output else subprocess.STDOUT,
-            **kwargs) as p:
+        cmd,
+        shell=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE if capture_output else subprocess.STDOUT,
+        **kwargs
+    ) as p:
 
         if capture_output:
             log_output(p.stderr)
@@ -54,9 +55,9 @@ def run_cmd(cmd: str, capture_output=False, **kwargs) -> str:
             raise subprocess.CalledProcessError(rc, p.args)
 
         if capture_output and p.stdout:
-            return ''.join(p.stdout.readlines())
+            return "".join(p.stdout.readlines())
 
-        return ''
+        return ""
 
 
 def expd(p: str | bytes | os.PathLike) -> str:
@@ -93,4 +94,4 @@ def expd(p: str | bytes | os.PathLike) -> str:
     return expandvars(expanduser(os.fspath(p)))
 
 
-__all__ = ['log_output', 'run_cmd', 'expd']
+__all__ = ["log_output", "run_cmd", "expd"]

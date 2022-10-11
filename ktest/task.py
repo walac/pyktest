@@ -28,6 +28,7 @@ class Task(ABC):
         :param dependencies: A list of tasks than we depend on.
         :type dependencies: list
     """
+
     ctx: Context
     pre_exec: Optional[PreExecType] = field(default=None, repr=False)
     post_exec: Optional[PostExecType] = field(default=None, repr=False)
@@ -55,4 +56,4 @@ class Task(ABC):
         """
 
 
-__all__ = ['Task']
+__all__ = ["Task"]

@@ -80,15 +80,15 @@ class NullConnection(Connection):
 
     def run_command(self, cmd: str, capture_output=False) -> str:
         super().run_command(cmd, capture_output)
-        raise NotImplementedError('run_command is not implemented')
+        raise NotImplementedError("run_command is not implemented")
 
     def put(self, src: str, dest: str) -> None:
         super().put(src, dest)
-        raise NotImplementedError('copy_to is not implemented')
+        raise NotImplementedError("copy_to is not implemented")
 
-    def get(self, src: str, dest='.') -> None:
+    def get(self, src: str, dest=".") -> None:
         super().get(src, dest)
-        raise NotImplementedError('copy_from is not implemented')
+        raise NotImplementedError("copy_from is not implemented")
 
 
 class NullFactory(ConnectionFactory):
@@ -101,6 +101,9 @@ class NullFactory(ConnectionFactory):
 FactoryType = Callable[[], Connection]
 
 __all__ = [
-    'FactoryType', 'Connection', 'ConnectionFactory', 'NullConnection',
-    'NullFactory'
+    "FactoryType",
+    "Connection",
+    "ConnectionFactory",
+    "NullConnection",
+    "NullFactory",
 ]

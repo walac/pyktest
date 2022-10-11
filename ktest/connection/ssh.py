@@ -11,7 +11,6 @@ from .. import _log
 
 
 class OutputLogger(StreamWatcher):
-
     def submit(self, stream) -> Iterable[str]:
         _log.logger.info(stream)
         return tuple()
@@ -24,6 +23,7 @@ class HostConfig:
 
     The constructor arguments are the same of the fabric.Connection class.
     """
+
     host: str
     user: Optional[str] = None
     port: Optional[int] = None
@@ -60,20 +60,20 @@ class Connection(base.Connection):
 
         :raise subprocess.CalledProcessError: in case a failure to run the command
         """
-        _log.logger.info(f'Running: ${cmd}')
+        _log.logger.info(f"Running: ${cmd}")
         try:
             r: fabric.Result = self.__connection.run(
-                cmd, echo=True, watchers=(OutputLogger(), ))
+                cmd, echo=True, watchers=(OutputLogger(),)
+            )
         except UnexpectedExit as ex:
             r: fabric.Result = ex.result
             _log.logger.error(r.stderr)
-            raise CalledProcessError(returncode=r.exited,
-                                     cmd=r.command) from ex
+            raise CalledProcessError(returncode=r.exited, cmd=r.command) from ex
 
         if capture_output:
             return r.stdout
 
-        return ''
+        return ""
 
     def put(self, src: str, dest: str) -> None:
         """
@@ -85,7 +85,7 @@ class Connection(base.Connection):
         :type dest: str
         """
         _log.logger.info(
-            f'Copying {src} to {self.__connection.user}@{self.__connection.host}:{dest}'
+            f"Copying {src} to {self.__connection.user}@{self.__connection.host}:{dest}"
         )
         self.__connection.put(local=src, remote=dest, preserve_mode=False)
 
@@ -99,7 +99,7 @@ class Connection(base.Connection):
         :type dest: str
         """
         _log.logger.info(
-            f'Copying {self.__connection.user}@{self.__connection.host}:{dest} to {src}'
+            f"Copying {self.__connection.user}@{self.__connection.host}:{dest} to {src}"
         )
         self.__connection.get(local=dest, remote=src, preserve_mode=False)
 
@@ -112,6 +112,7 @@ class ConnectionFactory(base.ConnectionFactory):
     :param config: a HostConfig object containing the connection configuration.
     :type config: HostConfig
     """
+
     config: HostConfig
 
     def create_connection(self) -> base.Connection:

@@ -3,14 +3,13 @@ from ktest.context import Context
 
 
 class FakeTask(Task):
-
     def __init__(self) -> None:
         self.steps: list[int] = []
 
         def f(val):
             return lambda _: self.steps.append(val)
 
-        super().__init__(Context(''), pre_exec=f(1), post_exec=f(3))
+        super().__init__(Context(""), pre_exec=f(1), post_exec=f(3))
 
     def execute(self) -> None:
         self.steps.append(2)

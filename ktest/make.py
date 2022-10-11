@@ -26,7 +26,7 @@ class Make:
     arch: str = field(default_factory=platform.machine)
     make: str = "make"
 
-    def __call__(self, target='', args='', parallel: bool = False) -> None:
+    def __call__(self, target="", args="", parallel: bool = False) -> None:
         """Call the make command.
 
         :param target: the make command target
@@ -40,10 +40,11 @@ class Make:
 
         :rtype: None
         """
-        j = f'-j{os.cpu_count()}' if parallel else ''
+        j = f"-j{os.cpu_count()}" if parallel else ""
         util.run_cmd(
-            f'{self.make} ARCH={self.arch} O={os.fspath(self.outdir)} {j} {args} {target}',
-            cwd=os.fspath(self.srcdir))
+            f"{self.make} ARCH={self.arch} O={os.fspath(self.outdir)} {j} {args} {target}",
+            cwd=os.fspath(self.srcdir),
+        )
 
     def kernel_release(self) -> str:
         """Compute the kernel release.
@@ -53,9 +54,11 @@ class Make:
         :return: A string with the kernel release
         :rtype: str
         """
-        return util.run_cmd(f'{self.make} kernelrelease',
-                            capture_output=True,
-                            cwd=os.fspath(self.srcdir)).rstrip('\n')
+        return util.run_cmd(
+            f"{self.make} kernelrelease",
+            capture_output=True,
+            cwd=os.fspath(self.srcdir),
+        ).rstrip("\n")
 
 
-__all__ = ['Make']
+__all__ = ["Make"]

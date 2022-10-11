@@ -1,5 +1,5 @@
 import logging
 
-logger = logging.getLogger('ktest')
+logger = logging.getLogger("ktest")
 
-__all__ = ['logger']
+__all__ = ["logger"]

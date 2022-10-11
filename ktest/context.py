@@ -30,13 +30,14 @@ class _FakeTemp:
 
 
 class Context:
-
-    def __init__(self,
-                 repo: str | os.PathLike,
-                 connection_factory: FactoryType = NullFactory(),
-                 arch=platform.machine(),
-                 temp_dir: str | os.PathLike = gettempdir(),
-                 build_dir: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        repo: str | os.PathLike,
+        connection_factory: FactoryType = NullFactory(),
+        arch=platform.machine(),
+        temp_dir: str | os.PathLike = gettempdir(),
+        build_dir: Optional[str] = None,
+    ) -> None:
         """
         :param repo: Kernel git repository.
         :type repo: Repo
@@ -65,13 +66,13 @@ class Context:
             self.__build_dir = TemporaryDirectory(dir=self.__temp_dir)
 
         assert isinstance(self.repo.working_dir, PathLike)
-        self.make = Make(srcdir=self.repo.working_dir,
-                         outdir=self.__build_dir.name,
-                         arch=arch)
+        self.make = Make(
+            srcdir=self.repo.working_dir, outdir=self.__build_dir.name, arch=arch
+        )
 
-        logger.info(f'Source directory: {self.repo.working_dir}')
-        logger.info(f'Build directory: {self.__build_dir}')
-        logger.info(f'Temp directory: {self.__temp_dir}')
+        logger.info(f"Source directory: {self.repo.working_dir}")
+        logger.info(f"Build directory: {self.__build_dir}")
+        logger.info(f"Temp directory: {self.__temp_dir}")
 
     @property
     def connection(self) -> Connection:
@@ -89,8 +90,9 @@ class Context:
         """Return the build directory."""
         return Path(self.__build_dir.name)
 
-    def add_dependencies(self, task: TaskInterface,
-                         *dependencies: TaskInterface) -> None:
+    def add_dependencies(
+        self, task: TaskInterface, *dependencies: TaskInterface
+    ) -> None:
         """
         Add new dependencies to the task.
 
@@ -112,4 +114,4 @@ class Context:
             t()
 
 
-__all__ = ['Context']
+__all__ = ["Context"]
