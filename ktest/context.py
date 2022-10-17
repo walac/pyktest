@@ -1,6 +1,6 @@
 import platform
 import os
-from typing import Optional, Protocol
+from typing import Protocol
 from tempfile import TemporaryDirectory, gettempdir
 from dataclasses import dataclass
 from graphlib import TopologicalSorter
@@ -36,7 +36,7 @@ class Context:
         connection_factory: FactoryType = NullFactory(),
         arch=platform.machine(),
         temp_dir: str | os.PathLike = gettempdir(),
-        build_dir: Optional[str] = None,
+        build_dir: str | None = None,
     ) -> None:
         """
         :param repo: Kernel git repository.
@@ -55,7 +55,7 @@ class Context:
         self.repo = Repo(repo)
 
         self.__connection_factory = connection_factory
-        self.__connection: Optional[Connection] = None
+        self.__connection: Connection | None = None
         self.__graph: TopologicalSorter[TaskInterface] = TopologicalSorter()
 
         if build_dir:

@@ -1,12 +1,12 @@
 import subprocess
 import os
-from typing import Optional, IO
+from typing import IO
 from os.path import expandvars, expanduser
 
 from ._log import logger
 
 
-def log_output(output: Optional[IO[str]]) -> None:
+def log_output(output: IO[str] | None) -> None:
     """Log the content of an IO object.
 
     :param output: The IO object.

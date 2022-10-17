@@ -1,4 +1,4 @@
-from typing import Callable, Optional, Sequence
+from typing import Callable, Sequence
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, InitVar, field
 
@@ -30,8 +30,8 @@ class Task(ABC):
     """
 
     ctx: Context
-    pre_exec: Optional[PreExecType] = field(default=None, repr=False)
-    post_exec: Optional[PostExecType] = field(default=None, repr=False)
+    pre_exec: PreExecType | None = field(default=None, repr=False)
+    post_exec: PostExecType | None = field(default=None, repr=False)
     dependencies: InitVar[Sequence[TaskInterface]] = tuple()
 
     def __post_init__(self, dependencies: Sequence[TaskInterface]) -> None:

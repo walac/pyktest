@@ -1,4 +1,4 @@
-from typing import Iterable, Optional
+from typing import Iterable
 from subprocess import CalledProcessError
 from dataclasses import dataclass
 
@@ -25,14 +25,14 @@ class HostConfig:
     """
 
     host: str
-    user: Optional[str] = None
-    port: Optional[int] = None
-    config: Optional[fabric.connection.Config] = None
-    gateway: Optional[fabric.Connection | str] = None
-    forward_agent: Optional[bool] = None
-    connect_timeout: Optional[int] = None
-    connect_kwargs: Optional[dict] = None
-    inline_ssh_env: Optional[bool] = None
+    user: str | None = None
+    port: int | None = None
+    config: fabric.connection.Config | None = None
+    gateway: fabric.Connection | str | None = None
+    forward_agent: bool | None = None
+    connect_timeout: int | None = None
+    connect_kwargs: dict | None = None
+    inline_ssh_env: bool | None = None
 
 
 class Connection(base.Connection):
