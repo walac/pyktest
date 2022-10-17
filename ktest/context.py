@@ -7,7 +7,6 @@ from graphlib import TopologicalSorter
 from pathlib import Path
 
 from git.repo import Repo
-from git.types import PathLike
 
 from .connection.base import FactoryType, NullFactory, Connection
 from .util import expd
@@ -65,7 +64,7 @@ class Context:
         else:
             self.__build_dir = TemporaryDirectory(dir=self.__temp_dir)
 
-        assert isinstance(self.repo.working_dir, PathLike)
+        assert isinstance(self.repo.working_dir, (os.PathLike, str))
         self.make = Make(
             srcdir=self.repo.working_dir, outdir=self.__build_dir.name, arch=arch
         )
