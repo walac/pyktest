@@ -2,6 +2,8 @@ import os
 import platform
 from dataclasses import dataclass, field
 
+from git.types import PathLike
+
 from . import util
 
 
@@ -12,17 +14,17 @@ class Make:
     Constructor arguments:
 
         :param srcdir: The kernel source directory path.
-        :type srcdir: str
+        :type srcdir: str | os.PathLike
         :param outdir: The binary output directory.
-        :type outdir: str
+        :type outdir: str | os.PathLike
         :param arch: The target binary architecture.
         :type arch: str
         :param make: The make command.
         :type make: str
     """
 
-    srcdir: str | os.PathLike
-    outdir: str | os.PathLike
+    srcdir: PathLike
+    outdir: PathLike
     arch: str = field(default_factory=platform.machine)
     make: str = "make"
 

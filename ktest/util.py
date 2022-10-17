@@ -3,6 +3,8 @@ import os
 from typing import IO
 from os.path import expandvars, expanduser
 
+from git.types import PathLike
+
 from ._log import logger
 
 
@@ -60,7 +62,7 @@ def run_cmd(cmd: str, capture_output=False, **kwargs) -> str:
         return ""
 
 
-def expd(p: str | bytes | os.PathLike) -> str:
+def expd(p: bytes | PathLike) -> str:
     """
     Expand references to environment variables and home directory.
 

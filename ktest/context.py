@@ -7,6 +7,7 @@ from graphlib import TopologicalSorter
 from pathlib import Path
 
 from git.repo import Repo
+from git.types import PathLike
 
 from .connection.base import FactoryType, NullFactory, Connection
 from .util import expd
@@ -34,8 +35,8 @@ class Context:
         repo: Repo,
         connection_factory: FactoryType = NullFactory(),
         arch=platform.machine(),
-        temp_dir: str | os.PathLike = gettempdir(),
-        build_dir: str | None = None,
+        temp_dir: PathLike = gettempdir(),
+        build_dir: PathLike | None = None,
     ) -> None:
         """
         :param repo: Kernel git repository.
@@ -45,8 +46,9 @@ class Context:
         :param arch: The target build architecture (equals to `make ARCH=`)
         :type arch: str
         :param temp_dir: The path to the root temporary directory.
-        :type temp_dir: str
+        :type temp_dir: str | os.PathLike
         :param build_dir: The path to the output binary directory (equals to `make O=`)
+        :type build_dir: str | os.PathLike | None
         """
         self.__temp_dir = Path(expd(temp_dir))
         self.__temp_dir.mkdir(parents=True, exist_ok=True)
