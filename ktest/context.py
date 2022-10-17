@@ -31,7 +31,7 @@ class _FakeTemp:
 class Context:
     def __init__(
         self,
-        repo: str | os.PathLike,
+        repo: Repo,
         connection_factory: FactoryType = NullFactory(),
         arch=platform.machine(),
         temp_dir: str | os.PathLike = gettempdir(),
@@ -51,7 +51,7 @@ class Context:
         self.__temp_dir = Path(expd(temp_dir))
         self.__temp_dir.mkdir(parents=True, exist_ok=True)
 
-        self.repo = Repo(repo)
+        self.repo = repo
 
         self.__connection_factory = connection_factory
         self.__connection: Connection | None = None

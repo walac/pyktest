@@ -1,6 +1,7 @@
 from typing import Sequence
 
 import pytest
+from git.repo import Repo
 
 from ktest.context import Context
 from ktest.task import Task
@@ -27,7 +28,7 @@ class FakeTask(Task):
 
 @pytest.fixture
 def ctx() -> Context:
-    return Context("")
+    return Context(Repo())
 
 
 def test_context_order(ctx: Context) -> None:
