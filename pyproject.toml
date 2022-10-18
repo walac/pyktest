@@ -18,6 +18,9 @@ black = "^22.10.0"
 flake8 = "^5.0.4"
 pyright = "^1.1.274"
 
+[tool.pyright]
+pythonVersion = "3.10"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
