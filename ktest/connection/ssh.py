@@ -1,8 +1,10 @@
+import os
 from typing import Iterable
 from subprocess import CalledProcessError
 from dataclasses import dataclass
 
 import fabric
+from git.types import PathLike
 from invoke.watchers import StreamWatcher
 from invoke.exceptions import UnexpectedExit
 
@@ -45,12 +47,12 @@ class Connection(base.Connection):
         """
         self.__connection = fabric.Connection(**config.__dict__)
 
-    def run_command(self, cmd: str, capture_output=False) -> str:
+    def run_command(self, cmd: PathLike, capture_output=False) -> str:
         """
         Run a command in the remote host.
 
         :param cmd: The command to run.
-        :type cmd: str
+        :type cmd: PathLike
         :param capture_output: if True, return the output of the command.
         :type capture_output: bool
 
@@ -63,7 +65,7 @@ class Connection(base.Connection):
         _log.logger.info(f"Running: ${cmd}")
         try:
             r: fabric.Result = self.__connection.run(
-                cmd, echo=True, watchers=(OutputLogger(),)
+                os.fspath(cmd), echo=True, watchers=(OutputLogger(),)
             )
         except UnexpectedExit as ex:
             r: fabric.Result = ex.result
@@ -75,28 +77,28 @@ class Connection(base.Connection):
 
         return ""
 
-    def put(self, src: str, dest: str) -> None:
+    def put(self, src: PathLike, dest: PathLike) -> None:
         """
         Send a file through a ssh connection.
 
         :param src: The path of the local source file.
-        :type src: str
+        :type src: PathLike
         :param dest: The path of the destiny file in the remote host.
-        :type dest: str
+        :type dest: PathLike
         """
         _log.logger.info(
             f"Copying {src} to {self.__connection.user}@{self.__connection.host}:{dest}"
         )
         self.__connection.put(local=src, remote=dest, preserve_mode=False)
 
-    def get(self, src: str, dest: str) -> None:
+    def get(self, src: PathLike, dest: PathLike) -> None:
         """
         Receive a file through a ssh connection.
 
         :param scr: The path of the source file in the remote host.
-        :type scr: str
+        :type scr: PathLike
         :param dest: The path of the destiny local file.
-        :type dest: str
+        :type dest: PathLike
         """
         _log.logger.info(
             f"Copying {self.__connection.user}@{self.__connection.host}:{dest} to {src}"

@@ -1,6 +1,8 @@
 from typing import Callable
 from abc import ABC, abstractmethod
 
+from git.types import PathLike
+
 
 class Connection(ABC):
     """
@@ -11,12 +13,12 @@ class Connection(ABC):
     """
 
     @abstractmethod
-    def run_command(self, cmd: str, capture_output=False) -> str:
+    def run_command(self, cmd: PathLike, capture_output=False) -> str:
         """
         Run a command in the remote host.
 
         :param cmd: The command to run.
-        :type cmd: str
+        :type cmd: PathLike
         :param capture_output: Should we return the command output?
         :type capture_output: bool
         :return: if capture_output is True, return the command output,
@@ -26,26 +28,26 @@ class Connection(ABC):
         """
 
     @abstractmethod
-    def put(self, src: str, dest: str) -> None:
+    def put(self, src: PathLike, dest: PathLike) -> None:
         """
         Copy a local file to the host.
 
         :param src: The local source file.
-        :type src: str
+        :type src: PathLike
         :param dest: The destination path in the host.
-        :type dest: str
+        :type dest: PathLike
         :rtype: None
         """
 
     @abstractmethod
-    def get(self, src: str, dest: str) -> None:
+    def get(self, src: PathLike, dest: PathLike) -> None:
         """
         Copy a file from the host to the local machine.
 
         :param src: The remote source file.
-        :type src: str
+        :type src: PathLike
         :param dest: The destination path in the local machine.
-        :type dest: str
+        :type dest: PathLike
         :rtype: None
         """
 
@@ -78,15 +80,15 @@ class NullConnection(Connection):
     It will raise NotImplementedError for any method called.
     """
 
-    def run_command(self, cmd: str, capture_output=False) -> str:
+    def run_command(self, cmd: PathLike, capture_output=False) -> str:
         super().run_command(cmd, capture_output)
         raise NotImplementedError("run_command is not implemented")
 
-    def put(self, src: str, dest: str) -> None:
+    def put(self, src: PathLike, dest: PathLike) -> None:
         super().put(src, dest)
         raise NotImplementedError("copy_to is not implemented")
 
-    def get(self, src: str, dest=".") -> None:
+    def get(self, src: PathLike, dest: PathLike) -> None:
         super().get(src, dest)
         raise NotImplementedError("copy_from is not implemented")
 
