@@ -64,5 +64,19 @@ class Make:
             cwd=os.fspath(self.srcdir),
         ).rstrip("\n")
 
+    def kernel_version(self) -> str:
+        """Compute the kernel version.
+
+        :raise subprocess.CalledProcessorError: if the command fails
+
+        :return: A string with the kernel version
+        :rtype: str
+        """
+        return util.run_cmd(
+            f"{self.make} -s kernelversion",
+            capture_output=True,
+            cwd=os.fspath(self.srcdir),
+        ).rstrip("\n")
+
 
 __all__ = ["Make"]
