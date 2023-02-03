@@ -59,7 +59,7 @@ class Make:
         :rtype: str
         """
         return util.run_cmd(
-            f"{self.make} kernelrelease",
+            f"{self.make} -s kernelrelease",
             capture_output=True,
             cwd=os.fspath(self.srcdir),
         ).rstrip("\n")
