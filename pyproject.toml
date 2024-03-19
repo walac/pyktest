@@ -10,6 +10,7 @@ readme = "README.md"
 python = "^3.10"
 fabric = "^2.7.1"
 gitpython = "^3.1.29"
+pre-commit = "^3.6.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.1.3"
