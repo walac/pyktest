@@ -109,6 +109,11 @@ class Context:
         """Create a new temporary directory."""
         return TemporaryDirectory(dir=self.__temp_dir)
 
+    def reboot(self) -> None:
+        """Reboot the remote machine."""
+        self.connection.run_command("reboot")
+        self.__connection = None
+
     def run(self) -> None:
         """Run all tasks in proper order."""
         for t in self.__graph.static_order():
